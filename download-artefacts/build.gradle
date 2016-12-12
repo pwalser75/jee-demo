@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
 	compile 'ch.frostnova:contacts-ear:1.0.0-SNAPSHOT'
+	compile 'ch.frostnova:contacts-api:1.0.0-SNAPSHOT'
 }
 
 task download(type: Copy) {
