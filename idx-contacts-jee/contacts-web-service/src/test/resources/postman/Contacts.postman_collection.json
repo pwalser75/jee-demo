@@ -1,0 +1,231 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Contacts",
+		"_postman_id": "0544d3f1-2515-abc7-2027-1bb914beb88e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Contact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var expectedStatus=200;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;\nif (responseStatus==expectedStatus) {\n    \n    var responseJson=JSON.parse(responseBody);\n    tests['ID: '+responseJson.id]= responseJson.id >=0;\n    postman.setEnvironmentVariable(\"recordId\", responseJson.id);\n}\n"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Nathan\",\n    \"last_name\": \"Walser\",\n    \"gender\": \"MALE\",\n    \"birth_date\": \"2006-02-08\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Contact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var expectedStatus=200;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;\nif (responseStatus==expectedStatus) {\n    \n    var responseJson=JSON.parse(responseBody);\n    tests['ID: '+responseJson.id]= responseJson.id >=0;\n    tests['Check first name']= responseJson.first_name == 'Nathan';\n    tests['Check last name']= responseJson.last_name == 'Walser';\n    tests['Check gender name']= responseJson.gender == 'MALE';\n    tests['Check birth date']= responseJson.birth_date == '2006-02-08';\n}\n"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact/{{recordId}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List Contacts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "expectedStatus=200;\nresponseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Contact ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var expectedStatus=204;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;\n"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact/{{recordId}}",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{recordId}}\",\n    \"first_name\": \"Kate\",\n    \"last_name\": \"Beckinsale\",\n    \"gender\": \"FEMALE\",\n    \"birth_date\": \"1973-07-26\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Check Contact Updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var expectedStatus=200;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;\nif (responseStatus==expectedStatus) {\n    \n    var responseJson=JSON.parse(responseBody);\n    tests['ID: '+responseJson.id]= responseJson.id >=0;\n    tests['Check first name']= responseJson.first_name == 'Kate';\n    tests['Check last name']= responseJson.last_name == 'Beckinsale';\n    tests['Check gender name']= responseJson.gender == 'FEMALE';\n    tests['Check birth date']= responseJson.birth_date == '1973-07-26';\n}"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact/{{recordId}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Contact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var expectedStatus=204;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact/{{recordId}}",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Check Contact Removed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var expectedStatus=404;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;\n"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact/{{recordId}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Cleanup",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": "postman.clearEnvironmentVariable(\"recordId\");"
+					}
+				}
+			],
+			"request": {
+				"url": "http://{{host}}:{{port}}/contacts/api/contact",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

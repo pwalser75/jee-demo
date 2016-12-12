@@ -1,0 +1,45 @@
+<div class="container">
+
+	
+	<h1 ng-if="!ctrl.contact.id">Add Contact</h1>
+	<h1 ng-if="ctrl.contact.id">Edit Contact</h1>
+	
+	<h3>{{ctrl.contact.first_name}} {{ctrl.contact.last_name}}</h3>
+	
+	<form name="form" class="form-horizontal">
+	
+		<table class="table">
+			<tr>
+				<td><b>Gender:</b></td>
+				<td>
+					<select class="form-control" ng-model="ctrl.contact.gender">
+						<option value="MALE">male</option>
+						<option value="FEMALE">female</option>
+					</select>
+				</td>		
+			</tr>
+			<tr>
+				<td style="width:8em"><b>Last name:</b></td>
+				<td><input class="form-control" type="text" ng-model="ctrl.contact.last_name" /></td>		
+			</tr>
+			<tr>
+				<td><b>First name:</b></td>
+				<td><input class="form-control" type="text" ng-model="ctrl.contact.first_name" /></td>		
+			</tr>
+			<tr>
+				<td><b>Date of birth:</b></td>
+				<td><input class="form-control" type="text" ng-model="ctrl.contact.birth_date" /></td>		
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input class="btn btn-default" type="button" ng-click="ctrl.reset()" value="Reset" />
+					<input class="btn btn-primary"type="submit" ng-click="ctrl.save()" value="Save" />
+				</td>		
+			</tr>
+		
+		</table>
+	
+	</form>
+	
+</div>

@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+repositories {
+		mavenLocal()
+		mavenCentral()
+}
+
+dependencies {
+	compile 'ch.frostnova:contacts-ear:1.0.0-SNAPSHOT'
+}
+
+task download(type: Copy) {
+  from configurations.runtime
+  into "${project.buildDir}"
+}

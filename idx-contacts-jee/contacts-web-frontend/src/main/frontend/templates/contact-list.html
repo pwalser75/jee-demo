@@ -1,0 +1,30 @@
+<div class="container">
+	<h1>Contacts</h1>
+	<table class="table table-hover">
+			<tr class="hover-container" ng-repeat="contact in ctrl.contacts" >
+				
+				<td style="width: 5em">
+					<span class="hover-hide">
+						<i class="fa fa-user size-l" aria-hidden="true"></i>
+					</span>
+					<a class="hover-show" href="#" ui-sref="editContact({ id : contact.id })">
+						<i class="fa fa-pencil-square size-l hover-show text-success" aria-hidden="true"></i>
+					</a>
+					<a class="hover-show" href="#">
+						<i class="fa fa-minus-square size-l hover-show text-danger" aria-hidden="true"></i>
+					</a>
+				</td>
+				<td ng-click="ctrl.showContact(contact)" style="cursor: pointer">
+					<b>{{contact.first_name}} {{contact.last_name}}</b>
+				</td>
+				<td style="width: 10em"><b>{{contact.age.years}}</b> years old</td>
+				<td style="width: 10em">{{contact.birth_date}}</td>
+				<td style="width: 5em" >
+					<span class="hover-show">
+						ID: {{contact.id }}
+					</span>
+				</td>
+			</tr>
+	</table>
+	
+</div>

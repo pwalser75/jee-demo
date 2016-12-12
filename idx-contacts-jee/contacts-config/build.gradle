@@ -1,0 +1,4 @@
+description = 'Contacts Configuration'
+dependencies {
+	compileOnly libraries.jee
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="6">
+  <application-name>Idx Contacts</application-name>
+  <display-name>idx-contacts</display-name>
+  <module>
+    <ejb>contacts-service.jar</ejb>
+  </module>
+  <module>
+    <ejb>contacts-persistence.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>contacts-web-service.war</web-uri>
+      <context-root>/contacts/api</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>contacts-web-frontend.war</web-uri>
+      <context-root>/contacts</context-root>
+    </web>
+  </module>
+  <library-directory>lib</library-directory>
+</application>

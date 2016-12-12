@@ -1,0 +1,37 @@
+plugins {
+  id "com.moowork.gulp" version "1.0.1"
+}
+apply plugin: "com.moowork.gulp"
+apply plugin: 'war'
+
+description = 'Contacts Web Frontend'
+
+jar.enabled = false
+
+war {
+  with {
+    from( "${project.projectDir}/build/frontend" )
+  }
+}
+	
+node {
+	version = '7.2.1'
+	download = true
+	workDir = file("${project.projectDir}")
+	nodeModulesDir = file("${project.projectDir}")
+}
+gulp {
+	workDir = file("${project.projectDir}")
+	colors = true
+}
+
+gulp_build.inputs.dir file("${project.projectDir}/src")
+gulp_build.inputs.file file("${project.projectDir}/gulpfile.js")
+gulp_build.inputs.file file("${project.projectDir}/package.json")
+gulp_build.outputs.dir file("${project.buildDir}/frontend")
+gulp_build.outputs.dir file("${project.buildDir}/libs")
+
+gulp_build.dependsOn 'installGulp'
+gulp_build.dependsOn 'npmInstall'
+
+war.dependsOn gulp_build

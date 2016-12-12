@@ -1,0 +1,106 @@
+body{
+  
+}
+#title {
+	box-shadow: inset 0px -5px 10px 0px rgba(0,0,0,0.4);
+	
+	h1, h2, h3, h4, h5, h6 {
+		color: #FFFFFF;
+		text-shadow: 0 0 15px rgba(0,0,0,0.6);
+		line-height: 120%;
+		margin: 0;
+	}
+	.jumbotron {	
+		background: inherit;
+		margin: 0;
+	}
+}
+
+#navbar-top {
+	margin: 0;
+}
+
+.console {
+	display: block;
+	background-color: #333333;
+	color: #C7C7CF;
+	font-size: 90%;
+	font-weight: 600;
+	border-radius: 5px;
+	padding: 1em;
+	overflow: auto;
+	max-width: 100%;
+}
+.item-icon {
+	padding: 0 5px 0 0;
+}
+.item-text {
+	padding: 0;
+	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.single-line {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+/* List item component */
+.list-item {
+	display: flex;
+	margin: 10px 0;
+	
+	h1, h2, h3 {
+		margin: 0 0 5px 0;
+		font-weight: 700;
+	}
+	h1 {
+		font-size: 160%;
+	}
+	h2 {
+		font-size: 140%;
+	}
+	h3 {
+		font-size: 120%;
+	}
+	.list-item-icon {
+		flex: 0;
+		margin: 0 10px 0 0;
+		max-width: 50%;
+	}
+	.list-item-content {
+		flex: 1;
+		margin: 0;
+		padding: 0;
+	}
+}
+.size-xs {
+    font-size: 0.8em;
+}
+.size-s {
+    font-size: 0.9em;
+}
+.size-m {
+    font-size: 1em;
+}
+.size-l {
+    font-size: 1.4em;
+}
+.size-xl {
+    font-size: 2em;
+}
+.size-xxl {
+    font-size: 3em;
+}
+
+.hover-container .hover-show {
+	display: none;
+}
+.hover-container:hover .hover-show {
+	display: inline;
+}
+.hover-container:hover .hover-hide {
+	display: none;
+}

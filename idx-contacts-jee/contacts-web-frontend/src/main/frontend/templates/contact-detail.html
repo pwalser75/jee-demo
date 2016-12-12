@@ -1,0 +1,29 @@
+<div class="container">
+	<br>
+	<button ui-sref="contacts"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+	
+	<h1>{{ctrl.contact.first_name}} {{ctrl.contact.last_name}}</h1>
+	
+	<table class="table">
+		<tr>
+			<td style="width:8em"><b>Last name:</b></td>
+			<td>{{ctrl.contact.last_name}}</td>		
+		</tr>
+		<tr>
+			<td><b>First name:</b></td>
+			<td>{{ctrl.contact.first_name}}</td>		
+		</tr>
+		<tr>
+			<td><b>Date of birth:</b></td>
+			<td>{{ctrl.contact.birth_date}}</td>		
+		</tr>
+		<tr>
+			<td><b>Age:</b></td>
+			<td>
+				{{ctrl.contact.age.years}} years,
+				{{ctrl.contact.age.months}} months,
+				{{ctrl.contact.age.days}} days
+			</td>		
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,24 @@
+rootProject.name = 'idx-all'
+include ':persistence-api'
+include ':persistence-jpa'
+include ':persistence-testbase'
+include ':util-caching'
+include ':contacts-api'
+include ':contacts-config'
+include ':contacts-persistence'
+include ':contacts-service'
+include ':contacts-web-service'
+include ':contacts-web-frontend'
+include ':contacts-ear'
+
+project(':persistence-api').projectDir = "$rootDir/idx-commons/persistence-api" as File
+project(':persistence-jpa').projectDir = "$rootDir/idx-commons/persistence-jpa" as File
+project(':persistence-testbase').projectDir = "$rootDir/idx-commons/persistence-testbase" as File
+project(':util-caching').projectDir = "$rootDir/idx-commons/util-caching" as File
+project(':contacts-api').projectDir = "$rootDir/idx-contacts-jee/contacts-api" as File
+project(':contacts-config').projectDir = "$rootDir/idx-contacts-jee/contacts-config" as File
+project(':contacts-persistence').projectDir = "$rootDir/idx-contacts-jee/contacts-persistence" as File
+project(':contacts-service').projectDir = "$rootDir/idx-contacts-jee/contacts-service" as File
+project(':contacts-web-service').projectDir = "$rootDir/idx-contacts-jee/contacts-web-service" as File
+project(':contacts-web-frontend').projectDir = "$rootDir/idx-contacts-jee/contacts-web-frontend" as File
+project(':contacts-ear').projectDir = "$rootDir/idx-contacts-jee/contacts-ear" as File

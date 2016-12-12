@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+        http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+
+
+    <service>
+        <jsr107:defaults enable-management="true" enable-statistics="true" default-template="testTemplate">
+            <jsr107:cache name="test" template="testTemplate"/>
+            <jsr107:cache name="quick" template="quickTemplate"/>
+            <jsr107:cache name="tiny" template="tinyTemplate"/>
+        </jsr107:defaults>
+    </service>
+
+    <cache-template name="testTemplate">
+        <expiry>
+            <tti unit="hours">1</tti>
+        </expiry>
+        <heap unit="entries">5000</heap>
+    </cache-template>
+
+    <cache-template name="quickTemplate">
+        <expiry>
+            <ttl unit="seconds">1</ttl>
+        </expiry>
+    </cache-template>
+
+    <cache-template name="tinyTemplate">
+        <expiry>
+            <none/>
+        </expiry>
+        <heap unit="entries">5</heap>
+    </cache-template>
+</config>

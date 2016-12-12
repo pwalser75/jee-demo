@@ -1,0 +1,37 @@
+import java.util.regex.*
+
+apply plugin: 'ear'
+
+description = 'Contacts EAR'
+dependencies {
+  earlib project(':contacts-api')
+  earlib project(':contacts-config')
+  earlib project(':persistence-api')
+  earlib project(':persistence-jpa')
+  
+  deploy project(':contacts-service')
+  deploy project(':contacts-persistence')
+  deploy project(path: ':contacts-web-service', configuration:'archives')
+  deploy project(path: ':contacts-web-frontend', configuration:'archives')
+  
+  earlib libraries.loggingAPI
+  earlib libraries.loggingImpl
+  earlib libraries.jcache
+}
+
+ear {
+	deploymentDescriptor {
+		applicationName = "Idx Contacts"
+		displayName = "idx-contacts"
+	}
+  
+	// strip versions from EAR root entries
+	Pattern pattern = Pattern.compile("^(.+)-(\\d+(?:\\.\\d+)*.*)(\\.(?:j|w|e)ar)\$")
+	eachFile { fcd ->
+		Matcher matcher = pattern.matcher(fcd.name)
+		if (matcher.matches()){
+			fcd.name=matcher.group(1)+matcher.group(3)
+		}
+		println "processing: "+fcd.name
+    }
+}

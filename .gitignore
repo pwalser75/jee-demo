@@ -1,0 +1,5 @@
+.gradle/
+/**/build
+idx-contacts-jee/contacts-web-frontend/node-*
+idx-contacts-jee/contacts-web-frontend/node_modules/
+*.iml

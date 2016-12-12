@@ -1,0 +1,8 @@
+description = 'Contacts Service'
+dependencies {
+	compileOnly libraries.jee
+	compile project(':contacts-persistence')
+	compile project(':contacts-api')
+	
+	testCompile project(':persistence-testbase')
+}

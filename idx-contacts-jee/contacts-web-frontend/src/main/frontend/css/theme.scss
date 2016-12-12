@@ -1,0 +1,20 @@
+html {
+	min-height: 100%;
+}
+body {
+	background-color: #F6F6F6;
+	background: radial-gradient(circle farthest-corner at 50% 30%, #FFFFFF 50%, #cfd0d4 100%);
+	background-attachment: fixed;	
+    background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+}
+img.liquid {
+	max-width: 100%;
+}
+.wallpaper {
+	background: url(../images/wallpaper.jpg);
+	background-size: cover;
+	background-position: 100% 30%;
+	
+}

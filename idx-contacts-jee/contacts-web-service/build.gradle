@@ -1,0 +1,11 @@
+apply plugin: 'war'
+
+jar.enabled = true
+
+description = 'Contacts Web Services'
+dependencies {
+	providedCompile libraries.jee
+	providedCompile project(':contacts-api')
+	
+	testCompile libraries.jaxrs
+}

@@ -1,0 +1,8 @@
+description = 'Persistence JPA'
+dependencies {
+	compile project(':persistence-api')
+	testCompile project(':persistence-testbase')
+	
+    compileOnly libraries.jee
+	compileOnly libraries.hibernate
+}

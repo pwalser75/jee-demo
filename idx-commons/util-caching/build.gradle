@@ -1,0 +1,8 @@
+description = 'Caching Util'
+dependencies {
+    compileOnly libraries.jee
+    compile libraries.jcache
+    compile libraries.loggingAPI
+	
+	testCompile project(':persistence-testbase')
+}
