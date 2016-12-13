@@ -1,8 +1,8 @@
 package idx.contacts.web.ws;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
+import idx.contacts.api.model.Gender;
+import idx.contacts.api.model.Person;
+import idx.contacts.api.service.ContactService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,10 +15,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import idx.contacts.api.model.Person;
-import idx.contacts.api.model.Gender;
-import idx.contacts.api.service.ContactService;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Full local path: http://localhost:8080/contacts/api/contacts

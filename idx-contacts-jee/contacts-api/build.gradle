@@ -1,8 +1,8 @@
 description = 'Contacts API'
 dependencies {
-	compileOnly libraries.jee
-	compile project(':persistence-api')
-	
-	testCompile libraries.junit
-	testCompile libraries.jaxb
+    compileOnly libraries.jee
+    compile project(':persistence-api')
+
+    testCompile libraries.testbase
+    testCompile libraries.jaxb
 }

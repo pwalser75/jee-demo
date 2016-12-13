@@ -4,8 +4,10 @@ jar.enabled = true
 
 description = 'Contacts Web Services'
 dependencies {
-	providedCompile libraries.jee
-	providedCompile project(':contacts-api')
-	
-	testCompile libraries.jaxrs
+    providedCompile libraries.jee
+    providedCompile project(':contacts-api')
+
+    testCompile libraries.testbase
+    testCompile libraries.jaxrs
+    testCompile libraries.guava
 }

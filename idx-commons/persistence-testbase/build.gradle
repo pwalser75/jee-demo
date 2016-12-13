@@ -1,11 +1,11 @@
 description = 'Persistence Test Base'
 dependencies {
+    compile libraries.testbase
     compile libraries.hibernate
     compile libraries.hsqldb
     compile libraries.deltaspike
     compile libraries.jee
-	compile libraries.junit
-	compile libraries.mockito
-	compile libraries.loggingAPI
-	compile libraries.loggingImpl
+    compile libraries.testbase
+    compile libraries.loggingAPI
+    compile libraries.loggingImpl
 }
