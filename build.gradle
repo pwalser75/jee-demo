@@ -13,6 +13,7 @@ apply plugin: 'com.github.ben-manes.versions'
 defaultTasks 'clean', 'build', 'install'
 
 allprojects  {
+	
 }
 
 subprojects {
@@ -35,6 +36,11 @@ subprojects {
 		test { output.resourcesDir = output.classesDir }
 	}
 	jar { duplicatesStrategy = 'exclude' }
+	
+	compileJava.options.encoding = 'UTF-8'
+	tasks.withType(JavaCompile) {
+		options.encoding = 'UTF-8'
+	}
 }
 
 dependencyUpdates.resolutionStrategy = {
