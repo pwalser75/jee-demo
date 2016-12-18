@@ -4,15 +4,26 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <security-role>
+        <role-name>*</role-name>
+    </security-role>
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Protected resources</web-resource-name>
             <url-pattern>/*</url-pattern>
         </web-resource-collection>
+        <auth-constraint>
+            <role-name>*</role-name>
+        </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
 
     <session-config>
         <session-timeout>1</session-timeout>
