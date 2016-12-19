@@ -10,6 +10,7 @@ include ':contacts-service'
 include ':contacts-web-service'
 include ':contacts-web-frontend'
 include ':contacts-ear'
+include ':contacts-client'
 
 project(':persistence-api').projectDir = "$rootDir/idx-commons/persistence-api" as File
 project(':persistence-jpa').projectDir = "$rootDir/idx-commons/persistence-jpa" as File
@@ -22,3 +23,4 @@ project(':contacts-service').projectDir = "$rootDir/idx-contacts-jee/contacts-se
 project(':contacts-web-service').projectDir = "$rootDir/idx-contacts-jee/contacts-web-service" as File
 project(':contacts-web-frontend').projectDir = "$rootDir/idx-contacts-jee/contacts-web-frontend" as File
 project(':contacts-ear').projectDir = "$rootDir/idx-contacts-jee/contacts-ear" as File
+project(':contacts-client').projectDir = "$rootDir/idx-contacts-jee/contacts-client" as File

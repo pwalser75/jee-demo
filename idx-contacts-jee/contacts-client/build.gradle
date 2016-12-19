@@ -1,0 +1,4 @@
+description = 'Contacts Client'
+dependencies {
+	compile project(':contacts-api')
+}
