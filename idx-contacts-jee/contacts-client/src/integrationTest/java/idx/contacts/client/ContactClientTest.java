@@ -1,49 +1,24 @@
 package idx.contacts.client;
 
-import org.glassfish.jersey.client.ClientProperties;
+import idx.contacts.api.model.Person;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.Response;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
-import java.util.Base64;
+import java.util.List;
 
 /**
  * Created by pwalser on 19.12.2016.
  */
 public class ContactClientTest {
 
-
     private final String BASE_URL = "https://localhost:8443/contacts";
 
-    private static ClientBuilder clientBuilder;
-
-
-    @BeforeClass
-    public static void setup() throws Exception {
-
-        try (InputStream in = ContactClientTest.class.getResourceAsStream("/client-truststore.jks")) {
-            KeyStore truststore = KeyStore.getInstance(KeyStore.getDefaultType());
-            truststore.load(in, "truststore".toCharArray());
-            clientBuilder = ClientBuilder.newBuilder()
-                    .trustStore(truststore)
-                    .property(ClientProperties.CONNECT_TIMEOUT, 500)
-                    .property(ClientProperties.READ_TIMEOUT, 5000)
-                    .hostnameVerifier((hostname, sslSession) -> "localhost".equals(hostname));
-        }
-
-    }
-
     @Test
-    public void testAuthenticationRequired() {
-        Client client = clientBuilder.build();
-        Invocation invocation = client
+    public void testAuthenticationRequired() throws Exception {
+
+        Invocation invocation = TestConnectionFactory.createClientBuilder().build()
                 .target(BASE_URL + "/api/contact")
                 .request()
                 .buildGet();
@@ -52,20 +27,15 @@ public class ContactClientTest {
         Assert.assertEquals(401, response.getStatus());
     }
 
+
     @Test
-    public void testList() {
-        Client client = clientBuilder.build();
+    public void testList() throws Exception {
 
-        String basicAuth = "Basic " + Base64.getEncoder().encodeToString("testuser:secret007".getBytes(StandardCharsets.UTF_8));
-        System.out.println("Credentials: " + basicAuth);
-        Invocation invocation = client
-                .target(BASE_URL + "/api/contact")
-                .request()
-                .header("Authorization", basicAuth)
-                .buildGet();
+        ConnectionContext connectionContext = new ConnectionContext(BASE_URL, TestConnectionFactory.createClientBuilder(), "testuser", "secret007");
+        ContactClient contactClient = new ContactClient(connectionContext);
 
-        Response response = invocation.invoke();
-        Assert.assertEquals(200, response.getStatus());
-        System.out.println(response.readEntity(String.class));
+        List<Person> persons = contactClient.list();
+        persons.forEach(p -> System.out.println(p + ": " + p.getFirstName() + " " + p.getLastName()));
     }
+
 }
