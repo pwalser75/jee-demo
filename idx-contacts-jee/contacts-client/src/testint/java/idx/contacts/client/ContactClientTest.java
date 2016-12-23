@@ -64,6 +64,8 @@ public class ContactClientTest {
     @Test
     public void testCRUD() throws Exception {
 
+        // create
+
         Person person = new Person();
         person.setFirstName("Terry");
         person.setLastName("Pratchett");
@@ -80,6 +82,8 @@ public class ContactClientTest {
         long id = created.getId();
         person = created;
 
+        // read
+
         Person loaded = contactClient.get(id);
         Assert.assertNotNull(loaded);
         Assert.assertNotNull(loaded.getId());
@@ -87,6 +91,12 @@ public class ContactClientTest {
         Assert.assertEquals(person.getLastName(), loaded.getLastName());
         Assert.assertEquals(person.getGender(), loaded.getGender());
         Assert.assertEquals(person.getDateOfBirth(), loaded.getDateOfBirth());
+
+        // list
+
+        Assert.assertTrue(contactClient.list().stream().anyMatch(p -> p.getId() == id));
+
+        // update
 
         person.setFirstName("Douglas");
         person.setLastName("Adams");
@@ -102,12 +112,16 @@ public class ContactClientTest {
         Assert.assertEquals(person.getGender(), loaded.getGender());
         Assert.assertEquals(person.getDateOfBirth(), loaded.getDateOfBirth());
 
+        // delete
+
         contactClient.delete(id);
 
         // delete again - must not result in an exception
         contactClient.delete(id);
 
         // must not be found afterwards
+        Assert.assertFalse(contactClient.list().stream().anyMatch(p -> p.getId() == id));
+
         try {
             contactClient.get(id);
             Assert.fail("Expected: NotFoundException");

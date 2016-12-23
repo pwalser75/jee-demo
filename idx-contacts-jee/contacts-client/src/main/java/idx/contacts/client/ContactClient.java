@@ -11,12 +11,18 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
+ * The contact client provides the client API for the contact web service.
  * Created by pwalser on 19.12.2016.
  */
 public class ContactClient {
 
     private final ConnectionContext connectionContext;
 
+    /**
+     * Constructor
+     *
+     * @param connectionContext connection context (required)
+     */
     public ContactClient(ConnectionContext connectionContext) {
         if (connectionContext == null) {
             throw new IllegalArgumentException("Client builder is required");
@@ -24,6 +30,11 @@ public class ContactClient {
         this.connectionContext = connectionContext;
     }
 
+    /**
+     * List all persons
+     *
+     * @return list of persons (never null)
+     */
     public List<Person> list() {
         Invocation invocation = connectionContext.createClient()
                 .target(connectionContext.getBaseURL() + "/api/contact")
@@ -36,6 +47,12 @@ public class ContactClient {
         });
     }
 
+    /**
+     * Get a person by id. Throws a {@link javax.ws.rs.NotFoundException} if the person wasn't found.
+     *
+     * @param id id
+     * @return person.
+     */
     public Person get(long id) {
         Invocation invocation = connectionContext.createClient()
                 .target(connectionContext.getBaseURL() + "/api/contact/" + id)
@@ -47,6 +64,12 @@ public class ContactClient {
         return response.readEntity(Person.class);
     }
 
+    /**
+     * Create a new person with the provided data
+     *
+     * @param person data
+     * @return created person
+     */
     public Person create(Person person) {
         Invocation invocation = connectionContext.createClient()
                 .target(connectionContext.getBaseURL() + "/api/contact")
@@ -58,10 +81,15 @@ public class ContactClient {
         return response.readEntity(Person.class);
     }
 
+    /**
+     * Update a person
+     *
+     * @param person person (whose id is required)
+     */
     public void save(Person person) {
 
         if (person.getId() == null) {
-            throw new IllegalArgumentException("Person does not have an it, use the create() method instead");
+            throw new IllegalArgumentException("Person does not have an id, use the create() method instead");
         }
 
         Invocation invocation = connectionContext.createClient()
@@ -73,6 +101,11 @@ public class ContactClient {
         ResponseExceptionMapper.check(invocation.invoke(), 204);
     }
 
+    /**
+     * Delete the person with the given id, if it exists (no error thrown otherwise).
+     *
+     * @param id id of the record
+     */
     public void delete(long id) {
 
         Invocation invocation = connectionContext.createClient()

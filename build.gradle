@@ -13,7 +13,6 @@ apply plugin: 'com.github.ben-manes.versions'
 defaultTasks 'clean', 'build', 'install'
 
 allprojects {
-
 }
 
 subprojects {
@@ -27,6 +26,7 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
+        jcenter()
         mavenLocal()
         mavenCentral()
     }
@@ -54,11 +54,11 @@ subprojects {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
 
-            java.srcDir file('src/integrationTest/java')
+            java.srcDir file('src/testint/java')
         }
 
         test {
-            resources.srcDir file('src/integrationTest/resources')
+            resources.srcDir file('src/testint/resources')
         }
     }
 

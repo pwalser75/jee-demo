@@ -1,6 +1,5 @@
 package idx.contacts.web.ws;
 
-import idx.contacts.api.model.Gender;
 import idx.contacts.api.model.Person;
 import idx.contacts.api.service.ContactService;
 
@@ -8,7 +7,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,6 +24,8 @@ public class ContactsEndpoint {
 
     /**
      * List contacts
+     *
+     * @return list of contacts (never null)
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +34,10 @@ public class ContactsEndpoint {
     }
 
     /**
-     * Get a contact
+     * Get a record by id. If the contact was not found, a NoSuchElementException will be thrown (resulting in a 404 NOT FOUND).
+     *
+     * @param id id of the record
+     * @return record
      */
     @GET
     @Path("/{id}")
@@ -48,10 +51,10 @@ public class ContactsEndpoint {
     }
 
     /**
-     * Create a new contact (or updates an existing contact, when the id is set).
+     * Create a new record (or updates an existing contact, when the id is set).
      *
-     * @param person
-     * @return created contact
+     * @param person record to create
+     * @return created record
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -61,7 +64,7 @@ public class ContactsEndpoint {
     }
 
     /**
-     * Update contact
+     * Update a record
      *
      * @param id     id of the record to update
      * @param person new data to set
@@ -75,29 +78,13 @@ public class ContactsEndpoint {
     }
 
     /**
-     * Delete a contact
+     * Delete a record
      *
-     * @param id person id
+     * @param id id of the record
      */
     @DELETE
     @Path("/{id}")
     public void delete(@PathParam("id") long id) {
         contactService.delete(id);
-    }
-
-    /**
-     * Get a contact
-     */
-    @GET
-    @Path("/testdata")
-    public void createTestData() {
-        for (Person person : contactService.list()) {
-            contactService.delete(person.getId());
-        }
-
-        contactService.save(new Person("Peter", "Walser", Gender.MALE, LocalDate.of(1975, 10, 20)));
-        contactService.save(new Person("Manuela", "Walser", Gender.FEMALE, LocalDate.of(1979, 10, 24)));
-        contactService.save(new Person("Nathan", "Walser", Gender.MALE, LocalDate.of(2006, 2, 8)));
-        contactService.save(new Person("Colin", "Walser", Gender.MALE, LocalDate.of(2008, 6, 11)));
     }
 }
