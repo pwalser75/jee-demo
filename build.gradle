@@ -41,6 +41,35 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
+
+// integration test settings
+
+    configurations {
+        integrationTestCompile.extendsFrom testCompile
+        integrationTestRuntime.extendsFrom testRuntime
+    }
+
+    sourceSets {
+        integrationTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+
+            java.srcDir file('src/integrationTest/java')
+        }
+
+        test {
+            resources.srcDir file('src/integrationTest/resources')
+        }
+    }
+
+    task integrationTest(type: Test) {
+        testClassesDir = sourceSets.integrationTest.output.classesDir
+        classpath = sourceSets.integrationTest.runtimeClasspath
+
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
 }
 
 dependencyUpdates.resolutionStrategy = {

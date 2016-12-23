@@ -3,6 +3,7 @@ include ':persistence-api'
 include ':persistence-jpa'
 include ':persistence-testbase'
 include ':util-caching'
+include ':ws-client-util'
 include ':contacts-api'
 include ':contacts-config'
 include ':contacts-persistence'
@@ -16,6 +17,7 @@ project(':persistence-api').projectDir = "$rootDir/idx-commons/persistence-api" 
 project(':persistence-jpa').projectDir = "$rootDir/idx-commons/persistence-jpa" as File
 project(':persistence-testbase').projectDir = "$rootDir/idx-commons/persistence-testbase" as File
 project(':util-caching').projectDir = "$rootDir/idx-commons/util-caching" as File
+project(':ws-client-util').projectDir = "$rootDir/idx-commons/ws-client-util" as File
 project(':contacts-api').projectDir = "$rootDir/idx-contacts-jee/contacts-api" as File
 project(':contacts-config').projectDir = "$rootDir/idx-contacts-jee/contacts-config" as File
 project(':contacts-persistence').projectDir = "$rootDir/idx-contacts-jee/contacts-persistence" as File
