@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Login</h1>
+    Please log in with your credentials
+
+    <form ng-submit="ctrl.login()">
+
+        <div class="input-group mandatory">
+            <label>User name</label>
+            <input class="widget" type="text" ng-model="ctrl.username" placeholder="Please enter your user name"
+                   length="20">
+        </div>
+
+        <div class="input-group mandatory">
+            <label>Password</label>
+            <input class="widget" type="password" ng-model="ctrl.password" placeholder="Please enter your user name"
+                   length="20">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>

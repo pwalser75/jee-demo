@@ -85,6 +85,15 @@ dependencyUpdates.resolutionStrategy = {
     }
 }
 
+task info {
+    doLast {
+		project.childProjects.each{ p ->
+			println "Child: "+p.key
+		}
+        buildscript.configurations.classpath.each { println it.name }
+    }
+}
+
 ext.libraries = [
         jee        : "javax:javaee-api:7.0",
         testbase   : [

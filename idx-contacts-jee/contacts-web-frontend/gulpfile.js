@@ -17,9 +17,9 @@ const merge = require('utils-merge');
 const source = require('vinyl-source-stream'); 
 const buffer = require('vinyl-buffer');
 const concatcss = require('gulp-concat-css');
-const browserSync = require('browser-sync').create();
+const browserSync = require('browser-sync');
+const proxyMiddleware = require('http-proxy-middleware');
 const url = require('url');
-const proxy = require('proxy-middleware');
 
 // Configuration
 
@@ -34,8 +34,9 @@ const config = {
 		target: 'style.css'
 	},
 	proxy: {
-		url: 'http://localhost:8080/contacts/api',
-		route: '/api'
+		url: 'https://localhost:8443/contacts/',
+		route: '/api',
+		secure: false
 	},
 	filetypes: {
 		javascript: ['js','json'],
@@ -117,13 +118,16 @@ gulp.task('watch', ['build'], function() {
 
 gulp.task('server', ['watch'], function() {
 	
-	var proxyOptions = url.parse(config.proxy.url);
-    proxyOptions.route = config.proxy.route;
-
-	browserSync.init({
+	var proxy = proxyMiddleware([config.proxy.route], {target: config.proxy.url, secure:false});
+	browserSync({
+		open: true,
 		server: {
 			baseDir: config.target,
-			middleware: [proxy(proxyOptions)]
+			https: true,
+			routes: {
+				'/admin': '.'
+			},
+			middleware: [proxy]
 		}
 	});
 });

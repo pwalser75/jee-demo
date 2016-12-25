@@ -1,0 +1,56 @@
+.input-group {
+	width: 100%;
+	margin: 12px 0;
+}
+.input-group > label {
+	display: block;
+	color: #BBBBBB;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 70%;
+	padding: 0;
+	margin: 0 0 3px 0;
+}
+.input-group .widget {
+	display: block;
+	width: 100%;
+	border: 0;
+	padding: 6px;
+	background: rgba(0,0,0,0.04);
+	border-bottom: 1px solid #666666;
+}
+.input-group .widget:focus {
+	border-bottom-width: 2px;
+	padding-bottom: 5px;
+}
+.input-group > span {
+	font-weight: normal;
+	font-style: italic;
+}
+.input-group.validation.error > label {
+	color: #B81104;
+}
+.input-group.validation.error > span {
+	color: #B81104;
+}
+.input-group.validation.error > .widget {
+	border-color: #B81104;
+}
+.input-group.validation.info > label {
+	color: #76BD17;
+}
+.input-group.validation.info > span {
+	color: #76BD17;
+}
+.input-group.validation.info > .widget {
+	border-color: #76BD17;
+}
+.input-group.validation.mandatory > label {
+	color: #007EC7;
+}
+.input-group.validation.mandatory > span {
+	color: #007EC7;
+}
+.input-group.validation.mandatory > .widget {
+	border-color: #007EC7;
+}
