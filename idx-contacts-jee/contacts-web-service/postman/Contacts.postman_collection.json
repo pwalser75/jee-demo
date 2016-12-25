@@ -3,6 +3,7 @@
 	"name": "Contacts",
 	"description": "",
 	"order": [
+		"c069c11c-af8f-d5a7-c25e-95ab4c691a5e",
 		"bb263178-aa64-294b-dce2-2b671bae4130",
 		"76ce6c99-a275-2bac-da5e-42418c738d57",
 		"c625bd94-ecfb-e6ed-158d-9b6f3745eb57",
@@ -114,8 +115,8 @@
 		},
 		{
 			"id": "aff27dcf-f495-dcce-f82b-c1fd72dbc716",
-			"headers": "Content-Type: application/json\nAuthorization: Basic dGVzdHVzZXI6c2VjcmV0MDA3Mg==\n",
-			"url": "{{contacts-base-url}}/contacts/api/contact",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dGVzdHVzZXI6c2VjcmV0MDA3\n",
+			"url": "{{contacts-base-url}}/api/contact",
 			"preRequestScript": "postman.clearEnvironmentVariable(\"recordId\");",
 			"pathVariables": {},
 			"method": "GET",
@@ -129,7 +130,7 @@
 				"password": "{{password}}",
 				"saveToRequest": true
 			},
-			"time": 1482095106666,
+			"time": 1482271909055,
 			"name": "Cleanup",
 			"description": "",
 			"collectionId": "71e60219-2ff4-24ab-f5bd-57d04a7fe5c6",
@@ -155,6 +156,30 @@
 			},
 			"time": 1482095077868,
 			"name": "Add Contact",
+			"description": "",
+			"collectionId": "71e60219-2ff4-24ab-f5bd-57d04a7fe5c6",
+			"responses": [],
+			"rawModeData": "{\n    \"first_name\": \"Nathan\",\n    \"last_name\": \"Walser\",\n    \"gender\": \"MALE\",\n    \"birth_date\": \"2006-02-08\"\n}"
+		},
+		{
+			"id": "c069c11c-af8f-d5a7-c25e-95ab4c691a5e",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dGVzdHVzZXI6c2VjcmV0MDA3\n",
+			"url": "{{contacts-base-url}}/api/info/user",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var expectedStatus=200;\nvar responseStatus=responseCode.code;\n\ntests['Expected status: '+expectedStatus+', is: '+responseStatus]= responseStatus==expectedStatus;\nif (responseStatus==expectedStatus) {\n    \n    var responseJson=JSON.parse(responseBody);\n    tests['principal name']= responseJson.principalName===postman.getEnvironmentVariable(\"user\");\n}\n\n\n",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "{{user}}",
+				"password": "{{password}}",
+				"saveToRequest": true
+			},
+			"time": 1482694153650,
+			"name": "Get User Info",
 			"description": "",
 			"collectionId": "71e60219-2ff4-24ab-f5bd-57d04a7fe5c6",
 			"responses": [],
