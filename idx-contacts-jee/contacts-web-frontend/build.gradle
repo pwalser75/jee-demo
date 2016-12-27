@@ -13,6 +13,10 @@ war {
     from( "${project.projectDir}/build/frontend" )
   }
 }
+
+task reset(type: Delete) {
+	delete 'node_modules'
+}
 	
 node {
 	version = '7.2.1'
