@@ -41,8 +41,21 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
+	
+	def dateTimeFormat=java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+	def buildDate=java.time.LocalDateTime.now()
+	
+	jar {
+		manifest {
+			attributes(
+				"Name": project.name,
+				"Version": project.version,
+				"Build-Date": dateTimeFormat.format(buildDate)
+			)
+		}
+	}
 
-// integration test settings
+	// integration test settings
 
     configurations {
         integrationTestCompile.extendsFrom testCompile
