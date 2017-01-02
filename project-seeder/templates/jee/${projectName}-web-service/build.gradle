@@ -1,0 +1,14 @@
+apply plugin: 'war'
+
+jar.enabled = true
+
+description = '${projectName} Web Services'
+dependencies {
+    providedCompile libraries.jee
+    providedCompile libraries.idx.persistence_api
+    providedCompile project(':${projectName}-api')
+
+    testCompile libraries.testbase
+    testCompile libraries.jaxrs
+    testCompile libraries.guava
+}

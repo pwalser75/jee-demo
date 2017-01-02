@@ -1,0 +1,4 @@
+description = '${projectName} Configuration'
+dependencies {
+	compileOnly libraries.jee
+}

@@ -1,0 +1,8 @@
+description = '${projectName} Service'
+dependencies {
+    compileOnly libraries.jee
+    compile project(':${projectName}-persistence')
+    compile project(':${projectName}-api')
+
+    testCompile libraries.idx.persistence_testbase
+}

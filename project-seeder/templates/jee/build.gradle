@@ -1,0 +1,165 @@
+buildscript {
+    repositories { jcenter() }
+
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:3.0.1'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+    }
+}
+
+apply plugin: 'nebula-aggregate-javadocs'
+apply plugin: 'com.github.ben-manes.versions'
+
+defaultTasks 'clean', 'build', 'install'
+
+allprojects {
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    group = '${projectGroup}'
+    version = '${projectVersion}'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+
+    sourceSets {
+        main { output.resourcesDir = output.classesDir }
+        test { output.resourcesDir = output.classesDir }
+    }
+    jar { duplicatesStrategy = 'exclude' }
+
+    compileJava.options.encoding = 'UTF-8'
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    def buildDate = java.time.LocalDateTime.now()
+
+    jar {
+        manifest {
+            attributes(
+                    "Name": project.name,
+                    "Version": project.version,
+                    "Build-Date": dateTimeFormat.format(buildDate)
+            )
+        }
+    }
+
+    // integration test settings
+
+    configurations {
+        integrationTestCompile.extendsFrom testCompile
+        integrationTestRuntime.extendsFrom testRuntime
+    }
+
+    sourceSets {
+        integrationTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+
+            java.srcDir file('src/testint/java')
+        }
+
+        test {
+            resources.srcDir file('src/testint/resources')
+        }
+    }
+
+    task integrationTest(type: Test) {
+        testClassesDir = sourceSets.integrationTest.output.classesDir
+        classpath = sourceSets.integrationTest.runtimeClasspath
+
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}
+
+task info {
+    doLast {
+        project.childProjects.each { p ->
+            println "Child: " + p.key
+        }
+        buildscript.configurations.classpath.each { println it.name }
+    }
+}
+
+ext.libraries = [
+        jee        : "javax:javaee-api:7.0",
+        testbase   : [
+                "junit:junit:4.12",
+                "org.mockito:mockito-core:2.4.1"
+        ],
+        junit      : "junit:junit:4.12",
+        mockito    : "org.mockito:mockito-core:2.3.0",
+        loggingAPI : [
+                "org.slf4j:slf4j-api:1.7.22"
+        ],
+        loggingImpl: [
+                "org.slf4j:jcl-over-slf4j:1.7.22",
+                "org.slf4j:jul-to-slf4j:1.7.22",
+                "ch.qos.logback:logback-classic:1.1.8"
+        ],
+        deltaspike : [
+                "org.apache.deltaspike.core:deltaspike-core-api:1.7.2",
+                "org.apache.deltaspike.core:deltaspike-core-impl:1.7.2",
+                "org.apache.deltaspike.modules:deltaspike-test-control-module-api:1.7.2",
+                "org.apache.deltaspike.modules:deltaspike-test-control-module-impl:1.7.2",
+                "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:1.7.2",
+                "org.apache.deltaspike.modules:deltaspike-jpa-module-api:1.7.2",
+                "org.apache.deltaspike.modules:deltaspike-jpa-module-impl:1.7.2",
+                "org.jboss.weld.se:weld-se-core:2.4.1.Final"
+        ],
+        hibernate  : [
+                dependencies.create("org.hibernate:hibernate-core:5.2.6.Final") {
+                    exclude module: "dom4j"
+                },
+                "org.hibernate:hibernate-entitymanager:5.2.6.Final"
+        ],
+        hsqldb     : "org.hsqldb:hsqldb:2.3.4",
+        jcache     : [
+                "javax.cache:cache-api:1.0.0",
+                dependencies.create("org.jsr107.ri:cache-annotations-ri-cdi:1.0.0") {
+                    exclude module: "cdi-api"
+                },
+                "org.ehcache:ehcache:3.2.0"
+        ],
+        jaxb       : [
+                "com.fasterxml.jackson.core:jackson-databind:2.8.5",
+                "com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.5"
+        ],
+        jaxrs      : [
+                "org.glassfish.jersey.core:jersey-client:2.25",
+                "org.glassfish.jersey.media:jersey-media-json-jackson:2.25"
+        ],
+        guava      : "com.google.guava:guava:20.0",
+        idx        : [
+                persistence_api     : "ch.frostnova:persistence-api:1.0.0-SNAPSHOT",
+                persistence_jpa     : "ch.frostnova:persistence-jpa:1.0.0-SNAPSHOT",
+                persistence_testbase: "ch.frostnova:persistence-testbase:1.0.0-SNAPSHOT",
+                ws_client_util      : "ch.frostnova:ws-client-util:1.0.0-SNAPSHOT"
+        ]
+]

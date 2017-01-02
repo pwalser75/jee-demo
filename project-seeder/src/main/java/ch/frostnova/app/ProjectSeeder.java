@@ -35,13 +35,13 @@ public class ProjectSeeder {
             template = promptParameter("Choose template");
         }
         String projectGroup = promptParameter("Project group", "org.test");
-        String projectName = promptParameter("Project name", "test-project");
+        String projectName = promptParameter("Project name", "some-project");
         String projectVersion = promptParameter("Project version", "1.0.0-SNAPSHOT");
 
         String suggestedBasePackage = projectGroup + "." + projectName;
         suggestedBasePackage = suggestedBasePackage.replaceAll("[^\\w]", ".");
         String basePackage = promptParameter("Base package", suggestedBasePackage);
-        String outputDir = promptParameter("Base output dir", new File("output").getAbsolutePath());
+        String outputDir = promptParameter("Base output dir", new File("..").getAbsolutePath());
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("projectGroup", projectGroup);

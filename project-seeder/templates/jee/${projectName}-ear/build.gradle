@@ -1,0 +1,37 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+apply plugin: 'ear'
+
+description = '${projectName} EAR'
+dependencies {
+    earlib project(':${projectName}-api')
+    earlib project(':${projectName}-config')
+
+    deploy project(':${projectName}-service')
+    deploy project(':${projectName}-persistence')
+    deploy project(path: ':${projectName}-web-service', configuration: 'archives')
+
+    earlib libraries.idx.persistence_api
+    earlib libraries.idx.persistence_jpa
+    earlib libraries.loggingAPI
+    earlib libraries.loggingImpl
+    earlib libraries.jcache
+}
+
+ear {
+    deploymentDescriptor {
+        applicationName = "${projectName}"
+        displayName = "${projectName}"
+    }
+
+    // strip versions from EAR root entries
+    Pattern pattern = Pattern.compile("^(.+)-(\\d+(?:\\.\\d+)*.*)(\\.(?:j|w|e)ar)\$")
+    eachFile { fcd ->
+        Matcher matcher = pattern.matcher(fcd.name)
+        if (matcher.matches()) {
+            fcd.name = matcher.group(1) + matcher.group(3)
+        }
+        println "processing: " + fcd.name
+    }
+}

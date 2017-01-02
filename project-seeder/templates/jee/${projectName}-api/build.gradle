@@ -1,0 +1,8 @@
+description = '${projectName} API'
+dependencies {
+    compileOnly libraries.jee
+    compile libraries.idx.persistence_api
+
+    testCompile libraries.testbase
+    testCompile libraries.jaxb
+}
