@@ -1,17 +1,15 @@
 package ${basePackage}.service;
 
-        import ${basePackage}.api.model.Gender;
-        import ${basePackage}.persistence.entity.PersonEntity;
-        import idx.persistence.repository.Repository;
-        import idx.persistence.testbase.cdi.TransactionalWrapper;
-        import org.slf4j.Logger;
+import ${basePackage}.persistence.entity.NoteEntity;
+import idx.persistence.repository.Repository;
+import idx.persistence.testbase.cdi.TransactionalWrapper;
+import org.slf4j.Logger;
 
-        import javax.annotation.PostConstruct;
-        import javax.annotation.PreDestroy;
-        import javax.ejb.Singleton;
-        import javax.ejb.Startup;
-        import javax.inject.Inject;
-        import java.time.LocalDate;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
 
 /**
  * Creates test data for the persistence tests.
@@ -21,7 +19,7 @@ package ${basePackage}.service;
 public class TestDataBean {
 
     @Inject
-    private Repository<PersonEntity, Long> repository;
+    private Repository<NoteEntity, Long> repository;
 
     @Inject
     TransactionalWrapper transactionalWrapper;
@@ -36,19 +34,13 @@ public class TestDataBean {
 
         transactionalWrapper.execute(() -> {
 
-            PersonEntity person = new PersonEntity();
-            person.setFirstName("Nathan");
-            person.setLastName("Walser");
-            person.setGender(Gender.MALE);
-            person.setDateOfBirth(LocalDate.of(2006, 2, 8));
-            repository.save(person);
+            NoteEntity note = new NoteEntity();
+            note.setText("Bonjour");
+            repository.save(note);
 
-            person = new PersonEntity();
-            person.setFirstName("Colin");
-            person.setLastName("Walser");
-            person.setGender(Gender.MALE);
-            person.setDateOfBirth(LocalDate.of(2008, 6, 11));
-            repository.save(person);
+            note = new NoteEntity();
+            note.setText("Welcome");
+            repository.save(note);
 
         });
     }
@@ -56,7 +48,7 @@ public class TestDataBean {
     @PreDestroy
     public void cleanupTestData() throws Exception {
         logger.info("Destroying test data");
-        for (PersonEntity p : repository.list()) {
+        for (NoteEntity p : repository.list()) {
             repository.delete(p.getId());
         }
     }

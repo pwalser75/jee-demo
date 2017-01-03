@@ -1,49 +1,43 @@
 package ${basePackage}.persistence;
 
-        import ${basePackage}.api.model.Gender;
-        import ${basePackage}.persistence.entity.PersonEntity;
-        import idx.persistence.repository.Repository;
-        import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-        import org.junit.Assert;
-        import org.junit.Test;
-        import org.junit.runner.RunWith;
+import ${basePackage}.persistence.entity.NoteEntity;
+import idx.persistence.repository.Repository;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-        import javax.inject.Inject;
-        import java.time.LocalDate;
+import javax.inject.Inject;
 
 @RunWith(CdiTestRunner.class)
 public class RepositoryTest {
 
     @Inject
-    private Repository<PersonEntity, Long> repository;
+    private Repository<NoteEntity, Long> repository;
 
     @Test
     public void testCRUD() {
 
         // create
-        PersonEntity person = new PersonEntity();
-        person.setFirstName("Peter");
-        person.setLastName("Walser");
-        person.setGender(Gender.MALE);
+        NoteEntity note = new NoteEntity();
+        note.setText("Aloha");
 
-        Assert.assertFalse(person.isPersistent());
-        person = repository.save(person);
-        Assert.assertTrue(person.isPersistent());
-        Assert.assertNotNull(person.getId());
+        Assert.assertFalse(note.isPersistent());
+        note = repository.save(note);
+        Assert.assertTrue(note.isPersistent());
+        Assert.assertNotNull(note.getId());
 
         // read
-        person = repository.get(person.getId());
-        Assert.assertEquals("Peter", person.getFirstName());
-        Assert.assertEquals("Walser", person.getLastName());
-        Assert.assertEquals(Gender.MALE, person.getGender());
+        note = repository.get(note.getId());
+        Assert.assertEquals("Aloha", note.getText());
 
         // update
-        person.setDateOfBirth(LocalDate.of(1975, 12, 20));
-        person = repository.save(person);
+        note.setText("Lorem ipsum dolor sit amet");
+        note = repository.save(note);
 
         // delete
-        repository.delete(person.getId());
-        person = repository.get(person.getId());
-        Assert.assertNull(person);
+        repository.delete(note.getId());
+        note = repository.get(note.getId());
+        Assert.assertNull(note);
     }
 }

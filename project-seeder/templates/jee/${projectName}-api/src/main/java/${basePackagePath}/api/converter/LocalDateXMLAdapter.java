@@ -1,7 +1,7 @@
 package ${basePackage}.api.converter;
 
-        import javax.xml.bind.annotation.adapters.XmlAdapter;
-        import java.time.LocalDate;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.LocalDate;
 
 public class LocalDateXMLAdapter extends XmlAdapter<String, LocalDate> {
 

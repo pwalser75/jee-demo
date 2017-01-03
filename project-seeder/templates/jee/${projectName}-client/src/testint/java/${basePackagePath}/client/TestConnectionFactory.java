@@ -1,10 +1,10 @@
 package ${basePackage}.client;
 
-        import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.ClientProperties;
 
-        import javax.ws.rs.client.ClientBuilder;
-        import java.io.InputStream;
-        import java.security.KeyStore;
+import javax.ws.rs.client.ClientBuilder;
+import java.io.InputStream;
+import java.security.KeyStore;
 
 /**
  * Created by pwalser on 22.12.2016.
@@ -17,7 +17,7 @@ public final class TestConnectionFactory {
 
     public static ClientBuilder createClientBuilder() throws Exception {
 
-        try (InputStream in = ContactClientTest.class.getResourceAsStream("/client-truststore.jks")) {
+        try (InputStream in = NotesClientTest.class.getResourceAsStream("/client-truststore.jks")) {
             KeyStore truststore = KeyStore.getInstance(KeyStore.getDefaultType());
             truststore.load(in, "truststore".toCharArray());
             return ClientBuilder.newBuilder()

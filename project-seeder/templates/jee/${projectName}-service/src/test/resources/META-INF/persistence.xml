@@ -10,7 +10,7 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
         <description>Test Persistence Unit</description>
 
         <!-- Need to define which classes are to be covered, as non-test classes are not found by default -->
-        <class>${basePackage}.persistence.entity.PersonEntity</class>
+        <class>${basePackage}.persistence.entity.NoteEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>

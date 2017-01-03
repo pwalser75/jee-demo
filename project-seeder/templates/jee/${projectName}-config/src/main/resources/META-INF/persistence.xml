@@ -7,7 +7,7 @@
     <persistence-unit name="test" transaction-type="JTA">
         <jta-data-source>java:/jdbc/testDb</jta-data-source>
 
-        <class>${basePackage}.persistence.entity.PersonEntity</class>
+        <class>${basePackage}.persistence.entity.NoteEntity</class>
 
         <properties>
             <property name="hibernate.default_schema" value="test"/>
