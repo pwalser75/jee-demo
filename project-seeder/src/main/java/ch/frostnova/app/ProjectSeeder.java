@@ -1,8 +1,23 @@
 package ch.frostnova.app;
 
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,6 +28,10 @@ public class ProjectSeeder {
 
     private final static File TEMPLATES_DIR = new File("templates");
     private final static List<String> FILTER_FILE_SUFFIXES = Arrays.asList("txt", "md", "xml", "java", "gradle");
+
+    private final static Pattern SIMPLE_IDENTIFIER = Pattern.compile("\\p{Alnum}+([\\.\\-_]\\p{Alnum}+)*");
+    private final static Pattern VERSION = Pattern.compile("(\\d+(?:\\.\\d+)*.*)");
+    private final static Pattern JAVA_PACKAGE_NAME = Pattern.compile("([\\p{L}\\p{Sc}_][\\p{L}\\p{N}\\p{Sc}_]*\\.)*[\\p{L}\\p{Sc}_][\\p{L}\\p{N}\\p{Sc}_]*");
 
     public static void main(String[] args) throws IOException {
 
@@ -34,13 +53,13 @@ public class ProjectSeeder {
         while (!availableTemplates.contains(template)) {
             template = promptParameter("Choose template");
         }
-        String projectGroup = promptParameter("Project group", "org.test");
-        String projectName = promptParameter("Project name", "some-project");
-        String projectVersion = promptParameter("Project version", "1.0.0-SNAPSHOT");
+        String projectGroup = promptParameter("Project group", "org.test", SIMPLE_IDENTIFIER);
+        String projectName = promptParameter("Project name", "some-project", SIMPLE_IDENTIFIER);
+        String projectVersion = promptParameter("Project version", "1.0.0-SNAPSHOT", VERSION);
 
         String suggestedBasePackage = projectGroup + "." + projectName;
         suggestedBasePackage = suggestedBasePackage.replaceAll("[^\\w]", ".");
-        String basePackage = promptParameter("Base package", suggestedBasePackage);
+        String basePackage = promptParameter("Base package", suggestedBasePackage, JAVA_PACKAGE_NAME);
         String outputDir = promptParameter("Base output dir", new File("..").getAbsolutePath());
 
         Map<String, String> parameters = new HashMap<>();
@@ -69,16 +88,24 @@ public class ProjectSeeder {
     }
 
     private static String promptParameter(String prompt, String defaultValue) {
+        return promptParameter(prompt, defaultValue, null);
+    }
+
+    private static String promptParameter(String prompt, String defaultValue, Pattern pattern) {
         Scanner scanner = new Scanner(System.in);
         String input = null;
         while (input == null) {
             System.out.print(prompt + (defaultValue != null ? " (" + defaultValue + "): " : ": "));
-            input = scanner.nextLine();
+            input = scanner.nextLine().trim();
             if (input.trim().length() == 0) {
                 input = defaultValue;
             }
+            if (pattern != null && !pattern.matcher(input).matches()) {
+                System.out.println("  Invalid format, please try again");
+                input = null;
+            }
         }
-        return input.trim();
+        return input;
     }
 
     private void seedProject(File templateDir, File outputDir, Map<String, String> replacements) throws IOException {
@@ -94,13 +121,14 @@ public class ProjectSeeder {
                 process(templateDir, outputDir, path, replacements);
             }
         }
+        System.out.println("Project created at: " + outputDir.getAbsolutePath());
     }
 
     private void process(File templateDir, File outputDir, String sourcePath, Map<String, String> replacements) throws IOException {
         File file = new File(templateDir, sourcePath);
         File target = new File(outputDir, replaceAll(sourcePath, replacements));
 
-        System.out.println("Processing: " + file.getAbsolutePath() + " -> " + target.getAbsolutePath());
+        System.out.println(">> " + target.getAbsolutePath());
 
         if (file.isDirectory()) {
             target.mkdirs();
@@ -146,14 +174,6 @@ public class ProjectSeeder {
                 out.flush();
             }
         }
-    }
-
-    private String readFile(File file) {
-
-        StringWriter writer = new StringWriter();
-
-
-        return writer.toString();
     }
 
     private String replaceAll(String s, Map<String, String> replacements) {
