@@ -1,22 +1,8 @@
 package ch.frostnova.app;
 
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -128,9 +114,9 @@ public class ProjectSeeder {
         File file = new File(templateDir, sourcePath);
         File target = new File(outputDir, replaceAll(sourcePath, replacements));
 
-        System.out.println(">> " + target.getAbsolutePath());
 
         if (file.isDirectory()) {
+            System.out.println(">> create:  " + target.getAbsolutePath());
             target.mkdirs();
             String[] paths = file.list();
             if (paths != null) {
@@ -141,8 +127,10 @@ public class ProjectSeeder {
         } else {
             if (FILTER_FILE_SUFFIXES.stream().anyMatch(s -> target.getName().endsWith("." + s))) {
                 target.getParentFile().mkdirs();
+                System.out.println(">> process: " + target.getAbsolutePath());
                 copyText(file, target, replacements);
             } else {
+                System.out.println(">> copy:    " + target.getAbsolutePath());
                 copyBinary(file, target);
             }
         }
