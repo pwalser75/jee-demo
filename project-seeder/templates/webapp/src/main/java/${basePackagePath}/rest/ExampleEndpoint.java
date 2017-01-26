@@ -16,6 +16,7 @@ package ${basePackage}.rest;
         import java.util.List;
         import java.util.Properties;
 
+
 /**
  * Example JAX-RS rest web service
  */
@@ -28,30 +29,19 @@ public class ExampleEndpoint {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String list() {
+    public Map<String, String> getSystemProperties() {
 
-        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        Map<String, String> result = new LinkedHashMap<>();
 
         Properties systemProperties = System.getProperties();
         List<String> keys = new LinkedList<>(systemProperties.stringPropertyNames());
         Collections.sort(keys, Collator.getInstance());
+
         for (String key : keys) {
             String value = systemProperties.getProperty(key);
-            objectBuilder.add(key, value);
+            result.put(key, value);
         }
 
-        return serializeJSON(objectBuilder.build());
+        return result;
     }
-
-    private String serializeJSON(JsonStructure jsonStructure) {
-        if (jsonStructure == null) {
-            return null;
-        }
-        StringWriter writer = new StringWriter();
-        JsonWriter jsonWriter = Json.createWriter(writer);
-        jsonWriter.write(jsonStructure);
-        jsonWriter.close();
-        return writer.toString();
-    }
-
 }
