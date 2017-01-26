@@ -41,6 +41,7 @@ public class ProjectSeeder {
         }
         String projectGroup = promptParameter("Project group", "org.test", SIMPLE_IDENTIFIER);
         String projectName = promptParameter("Project name", "some-project", SIMPLE_IDENTIFIER);
+        String projectDescription = promptParameter("Project description", projectName);
         String projectVersion = promptParameter("Project version", "1.0.0-SNAPSHOT", VERSION);
 
         String suggestedBasePackage = projectGroup + "." + projectName;
@@ -51,6 +52,7 @@ public class ProjectSeeder {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("projectGroup", projectGroup);
         parameters.put("projectName", projectName);
+        parameters.put("projectDescription", projectDescription);
         parameters.put("projectVersion", projectVersion);
         parameters.put("basePackage", basePackage);
         parameters.put("basePackagePath", basePackage.replace(".", "/"));

@@ -1,12 +1,8 @@
-package ch.frostnova.web.example.rest;
+package ${basePackage}.rest;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+        import javax.ws.rs.ApplicationPath;
+        import javax.ws.rs.core.Application;
 
 @ApplicationPath("/api")
 public class RestConfig extends Application {
-    static {
-        System.out.println("RestConfig.static initializer");
-    }
-
 }

@@ -3,7 +3,7 @@ import java.util.regex.Pattern
 
 apply plugin: 'ear'
 
-description = '${projectName} EAR'
+description = '${projectDescription} EAR'
 dependencies {
     earlib project(':${projectName}-api')
     earlib project(':${projectName}-config')
@@ -22,7 +22,7 @@ dependencies {
 ear {
     deploymentDescriptor {
         applicationName = "${projectName}"
-        displayName = "${projectName}"
+        displayName = "${projectDescription}"
     }
 
     // strip versions from EAR root entries

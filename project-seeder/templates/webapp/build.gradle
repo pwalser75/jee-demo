@@ -3,7 +3,7 @@ apply plugin: 'maven'
 
 defaultTasks 'clean', 'build'
 
-description = '${projectName}'
+description = '${projectDescription}'
 group = '${projectGroup}'
 version = '${projectVersion}'
 
@@ -30,12 +30,6 @@ tasks.withType(JavaCompile) {
 
 def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 def buildDate = java.time.LocalDateTime.now()
-
-war {
-    with {
-        from("${project.projectDir}/build/frontend")
-    }
-}
 
 jar {
     manifest {
@@ -66,12 +60,9 @@ ext.libraries = [
         jaxrs      : [
                 "javax.ws.rs:javax.ws.rs-api:2.0.1",
                 "org.glassfish:javax.json:1.0.4",
-                "org.glassfish.jersey.core:jersey-client:2.25",
-                "org.glassfish.jersey.containers:jersey-container-servlet-core:2.25",
                 "org.glassfish.jersey.containers:jersey-container-servlet:2.25",
                 "org.glassfish.jersey.media:jersey-media-json-jackson:2.25"
         ]
-
 ]
 
 dependencies {

@@ -3,7 +3,7 @@ defaultTasks 'clean', 'build', 'install'
 apply plugin: 'java'
 apply plugin: 'maven'
 
-description = '${projectName}'
+description = '${projectDescription}'
 group = '${projectGroup}'
 version = '${projectVersion}'
 

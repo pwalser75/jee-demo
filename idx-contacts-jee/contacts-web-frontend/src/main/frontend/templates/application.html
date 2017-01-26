@@ -1,19 +1,26 @@
 <div id="title" class="wallpaper">
-	<div class="container">
-		<div class="jumbotron">
-			<h1>{{ctrl.title}}</h1>
-			<h3>{{ctrl.message}}</h3>
-		</div>
-	</div>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>{{ctrl.title}}</h1>
+            <h3>{{ctrl.message}}</h3>
+        </div>
+    </div>
 </div>
 
 <div class="container">
-	<p>
-	<ul ng-repeat="item in ctrl.data">
-		<li>
-			<b>{{item.title}}</b><br>
-			{{item.description}}
-		</li>
-	</ul>
-	<p>
+
+    <p>
+        <b>User Info:</b>
+        <br>
+        {{ctrl.userInfo}}
+    </p>
+
+    <p>
+    <ul ng-repeat="item in ctrl.data">
+        <li>
+            <b>{{item.title}}</b><br>
+            {{item.description}}
+        </li>
+    </ul>
+    <p>
 </div>

@@ -21,6 +21,16 @@
         </user-data-constraint>
     </security-constraint>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Unprotected resources</web-resource-name>
+            <url-pattern>/api/info/user</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
     <login-config>
         <auth-method>BASIC</auth-method>
     </login-config>

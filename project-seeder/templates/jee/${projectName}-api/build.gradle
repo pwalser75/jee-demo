@@ -1,4 +1,4 @@
-description = '${projectName} API'
+description = '${projectDescription} API'
 dependencies {
     compileOnly libraries.jee
     compile libraries.idx.persistence_api

@@ -1,4 +1,4 @@
-description = '${projectName} Service'
+description = '${projectDescription} Service'
 dependencies {
     compileOnly libraries.jee
     compile project(':${projectName}-persistence')
