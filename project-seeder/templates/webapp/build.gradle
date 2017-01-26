@@ -1,0 +1,87 @@
+apply plugin: 'war'
+apply plugin: 'maven'
+
+defaultTasks 'clean', 'build'
+
+description = '${projectName}'
+group = '${projectGroup}'
+version = '${projectVersion}'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+    main { output.resourcesDir = output.classesDir }
+    test { output.resourcesDir = output.classesDir }
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+}
+
+jar { duplicatesStrategy = 'exclude' }
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+def buildDate = java.time.LocalDateTime.now()
+
+war {
+    with {
+        from("${project.projectDir}/build/frontend")
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                "Name": project.name,
+                "Version": project.version,
+                "Build-Date": dateTimeFormat.format(buildDate)
+        )
+    }
+}
+
+ext.libraries = [
+        jee        : "javax:javaee-api:7.0",
+        junit      : "junit:junit:4.12",
+        mockito    : "org.mockito:mockito-core:2.3.0",
+        loggingAPI : [
+                "org.slf4j:slf4j-api:1.7.22"
+        ],
+        loggingImpl: [
+                "org.slf4j:jcl-over-slf4j:1.7.22",
+                "org.slf4j:jul-to-slf4j:1.7.22",
+                "ch.qos.logback:logback-classic:1.1.8"
+        ],
+        jaxb       : [
+                "com.fasterxml.jackson.core:jackson-databind:2.8.5",
+                "com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.5"
+        ],
+        jaxrs      : [
+                "javax.ws.rs:javax.ws.rs-api:2.0.1",
+                "org.glassfish:javax.json:1.0.4",
+                "org.glassfish.jersey.core:jersey-client:2.25",
+                "org.glassfish.jersey.containers:jersey-container-servlet-core:2.25",
+                "org.glassfish.jersey.containers:jersey-container-servlet:2.25",
+                "org.glassfish.jersey.media:jersey-media-json-jackson:2.25"
+        ]
+
+]
+
+dependencies {
+    providedCompile libraries.jee
+    compile libraries.jaxrs
+    compile libraries.jaxb
+    compile libraries.loggingAPI
+    runtime libraries.loggingImpl
+
+    testCompile libraries.junit
+    testCompile libraries.mockito
+}
+
