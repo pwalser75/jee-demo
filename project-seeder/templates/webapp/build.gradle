@@ -21,8 +21,6 @@ repositories {
     mavenCentral()
 }
 
-jar { duplicatesStrategy = 'exclude' }
-
 compileJava.options.encoding = 'UTF-8'
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -31,7 +29,7 @@ tasks.withType(JavaCompile) {
 def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 def buildDate = java.time.LocalDateTime.now()
 
-jar {
+war {
     manifest {
         attributes(
                 "Name": project.name,
