@@ -1,4 +1,0 @@
-description = '${projectDescription} Configuration'
-dependencies {
-    compileOnly libraries.jee
-}

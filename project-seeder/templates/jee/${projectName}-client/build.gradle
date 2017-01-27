@@ -1,7 +1,0 @@
-description = '${projectDescription} Client'
-dependencies {
-    compile project(':${projectName}-api')
-    compile libraries.idx.ws_client_util
-
-    testCompile libraries.testbase
-}
