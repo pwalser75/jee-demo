@@ -2,12 +2,7 @@ package idx.persistence.jpa.example;
 
 import idx.persistence.entity.BaseMetadataEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -19,9 +14,10 @@ public class Person extends BaseMetadataEntity<Long> {
      */
     private static final long serialVersionUID = -1166461789114073327L;
 
-    @Column(name = "first_name", unique = false, length = 64, nullable = false)
+    private String emailAddress;
+
     private String firstName;
-    @Column(name = "last_name", unique = false, length = 64, nullable = false)
+
     private String lastName;
 
     private Gender gender;
@@ -34,6 +30,16 @@ public class Person extends BaseMetadataEntity<Long> {
         return super.getId();
     }
 
+    @Column(name = "email_address", unique = true, length = 64, nullable = false)
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    @Column(name = "first_name", length = 16, nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -42,6 +48,7 @@ public class Person extends BaseMetadataEntity<Long> {
         this.firstName = firstName;
     }
 
+    @Column(name = "last_name", length = 16, nullable = false)
     public String getLastName() {
         return lastName;
     }

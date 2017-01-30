@@ -2,11 +2,14 @@ package idx.persistence.repository.jpa;
 
 import idx.persistence.annotation.Generic;
 import idx.persistence.entity.Entity;
+import idx.persistence.exception.ConstraintViolationException;
+import org.hibernate.PropertyValueException;
 
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
@@ -17,67 +20,77 @@ import java.util.List;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class GenericRepositoryJPA<E extends Entity<?>, ID> implements GenericRepository<E, ID> {
 
-	private Class<E> entityType;
+    private Class<E> entityType;
 
-	@Inject
-	private EntityManager entityManager;
+    @Inject
+    private EntityManager entityManager;
 
-	@Override
-	public void init(Class<E> entityType) {
-		this.entityType = entityType;
-	}
+    @Override
+    public void init(Class<E> entityType) {
+        this.entityType = entityType;
+    }
 
-	@Override
-	public Class<E> getEntityType() {
-		return entityType;
-	}
+    @Override
+    public Class<E> getEntityType() {
+        return entityType;
+    }
 
-	@Override
-	public E save(E entity) {
-		if (entity == null) {
-			throw new IllegalArgumentException("Entity is required");
-		}
+    @Override
+    public E save(E entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("Entity is required");
+        }
+        try {
+            if (!entity.isPersistent()) {
+                // insert
+                entityManager.persist(entity);
+            } else {
+                // update
+                entity = entityManager.merge(entity);
+            }
+            entityManager.flush();
+        } catch (PersistenceException ex) {
 
-		if (!entity.isPersistent()) {
-			// insert
-			entityManager.persist(entity);
-		} else {
-			// update
-			entity = entityManager.merge(entity);
-		}
-		entityManager.flush();
-		return entity;
-	}
+            if (ex.getCause() instanceof PropertyValueException) {
+                throw new ConstraintViolationException(ex.getMessage());
+            }
+            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                throw new ConstraintViolationException(ex.getMessage());
+            }
+            throw ex;
+        }
+        return entity;
+    }
 
-	@Override
-	public E get(ID id) {
-		if (id == null) {
-			throw new IllegalArgumentException("ID is required");
-		}
-		return entityManager.find(entityType, id);
-	}
+    @Override
+    public E get(ID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID is required");
+        }
+        return entityManager.find(entityType, id);
+    }
 
-	@Override
-	public List<E> list() {
+    @Override
+    public List<E> list() {
 
-		CriteriaQuery<E> query = entityManager.getCriteriaBuilder().createQuery(entityType);
-		Root root = query.from(entityType);
+        CriteriaQuery<E> query = entityManager.getCriteriaBuilder().createQuery(entityType);
+        Root root = query.from(entityType);
 
-		query.select(root).distinct(true);
+        query.select(root).distinct(true);
 
-		return entityManager.createQuery(query).getResultList();
-	}
+        return entityManager.createQuery(query).getResultList();
+    }
 
-	@Override
-	public void delete(ID id) {
-		if (id == null) {
-			throw new IllegalArgumentException("ID is required");
-		}
-		E entity = get(id);
-		if (entity != null) {
-			entityManager.remove(entity);
-			entityManager.flush();
-		}
+    @Override
+    public void delete(ID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID is required");
+        }
+        E entity = get(id);
+        if (entity != null) {
+            entityManager.remove(entity);
+            entityManager.flush();
+        }
 
-	}
+    }
 }

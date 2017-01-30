@@ -8,7 +8,6 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
 
         <description>Test Persistence Unit</description>
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
@@ -16,7 +15,13 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--
+            <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.scripts.create-target" value="create.ddl"/>
+            <property name="javax.persistence.schema-generation.scripts.drop-target" value="drop.ddl"/>
+            -->
         </properties>
 
     </persistence-unit>

@@ -27,6 +27,7 @@ public class RepositoryTestComponent {
         Person person = new Person();
         person.setFirstName("Peter");
         person.setLastName("Walser");
+        person.setEmailAddress("user@test.org");
         person.setGender(Gender.MALE);
 
         Assert.assertFalse(person.isPersistent());
@@ -38,6 +39,7 @@ public class RepositoryTestComponent {
         person = repository.get(person.getId());
         Assert.assertEquals("Peter", person.getFirstName());
         Assert.assertEquals("Walser", person.getLastName());
+        Assert.assertEquals("user@test.org", person.getEmailAddress());
         Assert.assertEquals(Gender.MALE, person.getGender());
 
         // update
