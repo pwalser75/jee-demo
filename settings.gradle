@@ -1,6 +1,5 @@
 rootProject.name = 'idx-all'
 include ':persistence-api'
-include ':persistence-jpa'
 include ':persistence-testbase'
 include ':util-caching'
 include ':ws-client-util'
@@ -14,7 +13,6 @@ include ':contacts-ear'
 include ':contacts-client'
 
 project(':persistence-api').projectDir = "$rootDir/idx-commons/persistence-api" as File
-project(':persistence-jpa').projectDir = "$rootDir/idx-commons/persistence-jpa" as File
 project(':persistence-testbase').projectDir = "$rootDir/idx-commons/persistence-testbase" as File
 project(':util-caching').projectDir = "$rootDir/idx-commons/util-caching" as File
 project(':ws-client-util').projectDir = "$rootDir/idx-commons/ws-client-util" as File

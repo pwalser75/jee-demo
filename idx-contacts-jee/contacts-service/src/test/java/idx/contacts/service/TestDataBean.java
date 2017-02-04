@@ -2,7 +2,7 @@ package idx.contacts.service;
 
 import idx.contacts.api.model.Gender;
 import idx.contacts.persistence.entity.PersonEntity;
-import idx.persistence.repository.Repository;
+import idx.contacts.persistence.entity.PersonRepository;
 import idx.persistence.testbase.cdi.TransactionalWrapper;
 import org.slf4j.Logger;
 
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class TestDataBean {
 
     @Inject
-    private Repository<PersonEntity, Long> repository;
+    private PersonRepository repository;
 
     @Inject
     TransactionalWrapper transactionalWrapper;
@@ -56,8 +56,6 @@ public class TestDataBean {
     @PreDestroy
     public void cleanupTestData() throws Exception {
         logger.info("Destroying test data");
-        for (PersonEntity p : repository.list()) {
-            repository.delete(p.getId());
-        }
+        repository.deleteAll();
     }
 }

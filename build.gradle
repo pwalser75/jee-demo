@@ -41,21 +41,21 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
-	
-	def dateTimeFormat=java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-	def buildDate=java.time.LocalDateTime.now()
-	
-	jar {
-		manifest {
-			attributes(
-				"Name": project.name,
-				"Version": project.version,
-				"Build-Date": dateTimeFormat.format(buildDate)
-			)
-		}
-	}
 
-	// integration test settings
+    def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    def buildDate = java.time.LocalDateTime.now()
+
+    jar {
+        manifest {
+            attributes(
+                    "Name": project.name,
+                    "Version": project.version,
+                    "Build-Date": dateTimeFormat.format(buildDate)
+            )
+        }
+    }
+
+    // integration test settings
 
     configurations {
         integrationTestCompile.extendsFrom testCompile
@@ -100,30 +100,30 @@ dependencyUpdates.resolutionStrategy = {
 
 task info {
     doLast {
-		project.childProjects.each{ p ->
-			println "Child: "+p.key
-		}
+        project.childProjects.each { p ->
+            println "Child: " + p.key
+        }
         buildscript.configurations.classpath.each { println it.name }
     }
 }
 
 ext.libraries = [
-        jee        : "javax:javaee-api:7.0",
-        testbase   : [
+        jee          : "javax:javaee-api:7.0",
+        testbase     : [
                 "junit:junit:4.12",
                 "org.mockito:mockito-core:2.4.1"
         ],
-        junit      : "junit:junit:4.12",
-        mockito    : "org.mockito:mockito-core:2.3.0",
-        loggingAPI : [
+        junit        : "junit:junit:4.12",
+        mockito      : "org.mockito:mockito-core:2.3.0",
+        loggingAPI   : [
                 "org.slf4j:slf4j-api:1.7.22"
         ],
-        loggingImpl: [
+        loggingImpl  : [
                 "org.slf4j:jcl-over-slf4j:1.7.22",
                 "org.slf4j:jul-to-slf4j:1.7.22",
                 "ch.qos.logback:logback-classic:1.1.8"
         ],
-        deltaspike : [
+        deltaspike   : [
                 "org.apache.deltaspike.core:deltaspike-core-api:1.7.2",
                 "org.apache.deltaspike.core:deltaspike-core-impl:1.7.2",
                 "org.apache.deltaspike.modules:deltaspike-test-control-module-api:1.7.2",
@@ -133,27 +133,28 @@ ext.libraries = [
                 "org.apache.deltaspike.modules:deltaspike-jpa-module-impl:1.7.2",
                 "org.jboss.weld.se:weld-se-core:2.4.1.Final"
         ],
-        hibernate  : [
+        springDataJPA: "org.springframework.data:spring-data-jpa:1.10.7.RELEASE",
+        hibernate    : [
                 dependencies.create("org.hibernate:hibernate-core:5.2.6.Final") {
                     exclude module: "dom4j"
                 },
                 "org.hibernate:hibernate-entitymanager:5.2.6.Final"
         ],
-        hsqldb     : "org.hsqldb:hsqldb:2.3.4",
-        jcache     : [
+        hsqldb       : "org.hsqldb:hsqldb:2.3.4",
+        jcache       : [
                 "javax.cache:cache-api:1.0.0",
                 dependencies.create("org.jsr107.ri:cache-annotations-ri-cdi:1.0.0") {
                     exclude module: "cdi-api"
                 },
                 "org.ehcache:ehcache:3.2.0"
         ],
-        jaxb       : [
+        jaxb         : [
                 "com.fasterxml.jackson.core:jackson-databind:2.8.5",
                 "com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.5"
         ],
-        jaxrs      : [
+        jaxrs        : [
                 "org.glassfish.jersey.core:jersey-client:2.25",
                 "org.glassfish.jersey.media:jersey-media-json-jackson:2.25"
         ],
-        guava      : "com.google.guava:guava:20.0"
+        guava        : "com.google.guava:guava:20.0"
 ]

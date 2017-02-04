@@ -2,7 +2,7 @@ package idx.contacts.persistence;
 
 import idx.contacts.api.model.Gender;
 import idx.contacts.persistence.entity.PersonEntity;
-import idx.persistence.repository.Repository;
+import idx.contacts.persistence.entity.PersonRepository;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class RepositoryTest {
 
     @Inject
-    private Repository<PersonEntity, Long> repository;
+    private PersonRepository repository;
 
     @Test
     public void testCRUD() {
@@ -32,7 +32,7 @@ public class RepositoryTest {
         Assert.assertNotNull(person.getId());
 
         // read
-        person = repository.get(person.getId());
+        person = repository.findOne(person.getId());
         Assert.assertEquals("Peter", person.getFirstName());
         Assert.assertEquals("Walser", person.getLastName());
         Assert.assertEquals(Gender.MALE, person.getGender());
@@ -43,7 +43,7 @@ public class RepositoryTest {
 
         // delete
         repository.delete(person.getId());
-        person = repository.get(person.getId());
+        person = repository.findOne(person.getId());
         Assert.assertNull(person);
     }
 }
