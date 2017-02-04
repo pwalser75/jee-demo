@@ -114,34 +114,44 @@ public class RepositoryTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void testDuplicateException() throws Exception {
-        tx.execute(() -> {
-            Person person = new Person();
-            person.setFirstName("Some");
-            person.setLastName("Person");
-            person.setEmailAddress("user@foo.org");
-            person.setGender(Gender.MALE);
-            repository.save(person);
-        });
+        try {
+            tx.execute(() -> {
+                Person person = new Person();
+                person.setFirstName("Some");
+                person.setLastName("Person");
+                person.setEmailAddress("user@foo.org");
+                person.setGender(Gender.MALE);
+                repository.save(person);
+            });
 
-        tx.execute(() -> {
-            Person person = new Person();
-            person.setFirstName("Another");
-            person.setLastName("Person");
-            person.setEmailAddress("user@foo.org");
-            person.setGender(Gender.FEMALE);
-            repository.save(person);
-        });
+            tx.execute(() -> {
+                Person person = new Person();
+                person.setFirstName("Another");
+                person.setLastName("Person");
+                person.setEmailAddress("user@foo.org");
+                person.setGender(Gender.FEMALE);
+                repository.save(person);
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void testConstraintViolationException() throws Exception {
-        tx.execute(() -> {
-            Person person = new Person();
-            person.setFirstName("This name is waaaaaaaaaaaaaaaay too long");
-            person.setLastName("This oke's ok");
-            person.setGender(Gender.MALE);
+        try {
+            tx.execute(() -> {
+                Person person = new Person();
+                person.setFirstName("This name is waaaaaaaaaaaaaaaay too long");
+                person.setLastName("This oke's ok");
+                person.setGender(Gender.MALE);
 
-            repository.save(person);
-        });
+                repository.save(person);
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
     }
 }

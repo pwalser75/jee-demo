@@ -52,10 +52,10 @@ public class GenericRepositoryJPA<E extends Entity<?>, ID> implements GenericRep
         } catch (PersistenceException ex) {
 
             if (ex.getCause() instanceof PropertyValueException) {
-                throw new ConstraintViolationException(ex.getMessage());
+                throw new ConstraintViolationException(ex.getCause().getMessage());
             }
             if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                throw new ConstraintViolationException(ex.getMessage());
+                throw new ConstraintViolationException(ex.getCause().getMessage());
             }
             throw ex;
         }
