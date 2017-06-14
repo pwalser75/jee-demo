@@ -68,9 +68,6 @@ subprojects {
             runtimeClasspath += main.output + test.output
 
             java.srcDir file('src/testint/java')
-        }
-
-        test {
             resources.srcDir file('src/testint/resources')
         }
     }
