@@ -76,22 +76,6 @@ public class Person implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    // synthetic methods
-
-    @XmlElement(name = "age")
-    @XmlJavaTypeAdapter(PeriodXMLAdapter.class)
-    public Period getAge() {
-        if (dateOfBirth == null) {
-            return null;
-        }
-        return Period.between(dateOfBirth, (LocalDate.now()));
-    }
-
-    public void setAge(Period age) {
-        // ignore, it's a read-only property, which might get submitted back from REST clients
-    }
-
-
     @Override
     public String toString() {
         return getClass().getSimpleName() + "#" + id;

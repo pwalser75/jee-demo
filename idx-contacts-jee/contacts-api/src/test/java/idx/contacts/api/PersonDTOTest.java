@@ -17,21 +17,6 @@ import java.time.Period;
 public class PersonDTOTest {
 
 	@Test
-	public void testAge() {
-		Person dto = new Person();
-
-		Assert.assertNull(dto.getAge());
-
-		dto.setFirstName("Peter");
-		dto.setLastName("Walser");
-		dto.setGender(Gender.MALE);
-		dto.setDateOfBirth(LocalDate.of(1975, 12, 20));
-
-		Period age = dto.getAge();
-		System.out.println(age.getYears() + " years, " + age.getMonths() + " months, " + age.getDays() + " days");
-	}
-
-	@Test
 	public void testSerializeJSON() throws IOException {
 
 		Person person = new Person();
