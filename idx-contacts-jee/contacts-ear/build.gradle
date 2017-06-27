@@ -7,13 +7,13 @@ description = 'Contacts EAR'
 dependencies {
     earlib project(':contacts-api')
     earlib project(':contacts-config')
-    earlib project(':persistence-api')
 
     deploy project(':contacts-service')
     deploy project(':contacts-persistence')
     deploy project(path: ':contacts-web-service', configuration: 'archives')
     deploy project(path: ':contacts-web-frontend', configuration: 'archives')
 
+    earlib libraries.persistenceJPA
     earlib libraries.springDataJPA
     earlib libraries.loggingAPI
     earlib libraries.loggingImpl

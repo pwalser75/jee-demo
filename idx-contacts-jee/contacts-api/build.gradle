@@ -1,7 +1,7 @@
 description = 'Contacts API'
 dependencies {
     compileOnly libraries.jee
-    compile project(':persistence-api')
+    compile libraries.persistenceJPA
 
     testCompile libraries.testbase
     testCompile libraries.jaxb

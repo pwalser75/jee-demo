@@ -1,89 +1,92 @@
 package idx.contacts.persistence.entity;
 
+import ch.frostnova.persistence.api.entity.BaseMetadataEntity;
 import idx.contacts.api.model.Gender;
-import idx.persistence.entity.BaseMetadataEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "person")
 public class PersonEntity extends BaseMetadataEntity<Long> {
 
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = -1166461789114073327L;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = -1166461789114073327L;
 
-	@Column(name = "first_name", unique = false, length = 64, nullable = false)
-	private String firstName;
-	@Column(name = "last_name", unique = false, length = 64, nullable = false)
-	private String lastName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-	private Gender gender;
-	private LocalDate dateOfBirth;
-	private LocalDate dateOfDeath;
+    @Column(name = "FIRST_NAME", length = 64, nullable = false)
+    private String firstName;
+    @Column(name = "LAST_NAME", length = 64, nullable = false)
+    private String lastName;
 
-	@Override
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	public Long getId() {
-		return super.getId();
-	}
+    @Column(name = "GENDER", length = 16)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-	@Override
-	public void setId(Long aLong) {
-		super.setId(aLong);
-	}
+    @Column(name = "BIRTH_DATE")
+    private LocalDate dateOfBirth;
 
-	public String getFirstName() {
-		return firstName;
-	}
+    @Column(name = "DATE_OF_DEATH")
+    private LocalDate dateOfDeath;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @Override
+    public Long getId() {
+        return id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public Gender getGender() {
+        return gender;
+    }
 
-	public LocalDate getDateOfDeath() {
-		return dateOfDeath;
-	}
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
-	public void setDateOfDeath(LocalDate dateOfDeath) {
-		this.dateOfDeath = dateOfDeath;
-	}
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	@Override
-	public String toString() {
-		return firstName + " " + lastName;
-	}
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public LocalDate getDateOfDeath() {
+        return dateOfDeath;
+    }
+
+    public void setDateOfDeath(LocalDate dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 
 }

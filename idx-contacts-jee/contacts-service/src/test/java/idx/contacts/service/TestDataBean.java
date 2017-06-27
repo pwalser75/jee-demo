@@ -1,9 +1,9 @@
 package idx.contacts.service;
 
+import ch.frostnova.jee.testbase.TransactionalWrapper;
 import idx.contacts.api.model.Gender;
 import idx.contacts.persistence.entity.PersonEntity;
 import idx.contacts.persistence.entity.PersonRepository;
-import idx.persistence.testbase.cdi.TransactionalWrapper;
 import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;

@@ -1,9 +1,9 @@
 description = 'Contacts Persistence'
 dependencies {
     compileOnly libraries.jee
+    compile libraries.persistenceJPA
     compile libraries.springDataJPA
-    compile project(':persistence-api')
     compile project(':contacts-api')
 
-    testCompile project(':persistence-testbase')
+    testCompile libraries.jeeTestbase
 }

@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import idx.contacts.api.model.Person;
 import idx.contacts.api.model.Gender;
 import idx.contacts.api.service.ContactService;
-import idx.persistence.entity.Entity;
 
 @RunWith(CdiTestRunner.class)
 public class ContactServiceTest {

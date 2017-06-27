@@ -1,5 +1,0 @@
-description = 'Persistence API'
-
-dependencies {
-    compileOnly libraries.jee
-}

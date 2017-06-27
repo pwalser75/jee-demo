@@ -1,7 +1,7 @@
 description = 'Contacts Client'
 dependencies {
     compile project(':contacts-api')
-	compile project(':ws-client-util')
+	compile libraries.wsClientUtil
 	
     testCompile libraries.testbase
 }
